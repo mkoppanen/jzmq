@@ -13,7 +13,7 @@ import org.zeromq.ZMQ.Socket;
 import org.zeromq.ZMQException;
 
 public class QueueDevice {
-    public static final long DEfAULT_POLL_TIMEOUT = 500;
+    public static final long DEfAULT_POLL_TIMEOUT = 100;
     private final ExecutorService exec;
     private final ZContext context;
     private final Socket frontend;
@@ -35,7 +35,7 @@ public class QueueDevice {
         this.context = context;
         this.frontend = frontend;
         this.backend = backend;
-        this.poller = context.getContext().poller(2);
+        this.poller = new Poller(2);
         this.pollTimeout = pollTimeout;
         this.exec = Executors.newSingleThreadExecutor(new ThreadFactory() {
             @Override
